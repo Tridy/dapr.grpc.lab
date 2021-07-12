@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "Dapr.Labs.sln",
+    "projects": [
+      "MyGrpcClient\\MyGrpcClient.csproj",
+      "MyGrpcService\\MyGrpcService.csproj"
+    ]
+  }
+}

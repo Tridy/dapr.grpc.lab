@@ -1,0 +1,9 @@
+{
+  "solution": {
+    "path": "Dapr.Labs.sln",
+    "projects": [
+      "MyWebApi\\MyWebApi.csproj",
+      "MyWebClient\\MyWebClient.csproj"
+    ]
+  }
+}

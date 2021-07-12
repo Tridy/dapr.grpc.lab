@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyGrpcClient": {
+      "commandName": "Project",
+      "commandLineArgs": "localhost:55320"
+    }
+  }
+}

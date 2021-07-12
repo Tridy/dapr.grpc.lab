@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MyWebClient": {
+      "commandName": "Project",
+      "commandLineArgs": "localhost:49924"
+    }
+  }
+}

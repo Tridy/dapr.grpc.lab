@@ -1,5 +1,6 @@
 ﻿using Dapr.Client;
 using Grpc.Net.Client;
+using GrpcLabs.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -16,23 +17,43 @@ namespace MyGrpcClient
             await CallServiceViaDapr().ConfigureAwait(false); // exception: 
         }
 
-        private static async Task CallServiceDirectly()
+        private static Task CallServiceDirectly()
         {
-            using var channel = GrpcChannel.ForAddress(LOCAL_ADDRESS);
-            var client = new MyGrpcService.Greeter.GreeterClient(channel);
-            MyGrpcService.HelloReply response = await client.SayHelloAsync(new MyGrpcService.HelloRequest { Name = "ThinkPad" });
-            Console.WriteLine(response.Message);
+            return Task.CompletedTask;
+
+            //using var channel = GrpcChannel.ForAddress(LOCAL_ADDRESS);
+            //var client = new MyGrpcService.Greeter.GreeterClient(channel);
+            //MyGrpcService.HelloReply response = await client.SayHelloAsync(new MyGrpcService.HelloRequest { Name = "ThinkPad" });
+            //Console.WriteLine(response.Message);
         }
 
         private static async Task CallServiceViaDapr()
         {
             using DaprClient daprClient = new DaprClientBuilder()
-                     .UseGrpcEndpoint(DAPR_ADDRESS)
+                     .UseGrpcEndpoint($"http://localhost:56637")
                      .Build();
 
-            var request = new MyGrpcService.HelloRequest { Name = "ThinkPad" };
+            var request = new HelloRequest { Name = "ThinkPad" };
 
-            var result = await daprClient.InvokeMethodGrpcAsync<MyGrpcService.HelloRequest, MyGrpcService.HelloReply>("MyGrpcApi001", "SayHello", request).ConfigureAwait(false);
+            var result = await daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>("MyGrpcApi001", "SayHello", request).ConfigureAwait(false);
+
+            
+
+
+            //{
+            //    var response = await DaprClient.InvokeMethodAsync<UserReadViewModel>(HttpMethod.Get, appIdAggregator, $"/v1/Bikes/{Model.User.UserId}");
+            //    if (response != null)
+            //    {
+            //        Model = response;
+            //        this.StateHasChanged();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            //}
+
         }
     }
 }

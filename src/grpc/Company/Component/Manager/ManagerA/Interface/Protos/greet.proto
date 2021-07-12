@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "ManagerA.Interfaces";
+
+package managerA;
+
+message ManagerARequest 
+{
+  string name = 1;
+}
+
+message ManagerAResponse 
+{
+  string message = 1;
+}

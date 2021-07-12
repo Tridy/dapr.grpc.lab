@@ -5,25 +5,25 @@ using System.Threading.Tasks;
 
 using Dapr.AppCallback.Autogen.Grpc.v1;
 using Dapr.Client.Autogen.Grpc.v1;
-using GrpcLabs.Interfaces;
 using System;
+using ManagerA.Interfaces;
 
 namespace MyGrpcService.Services
 {
-    public class GreeterService : AppCallback.AppCallbackBase // Greeter.GreeterBase
+    public class ManagerA : AppCallback.AppCallbackBase // Greeter.GreeterBase
     {
-        private readonly ILogger<GreeterService> _logger;
-        public GreeterService(ILogger<GreeterService> logger)
+        private readonly ILogger<ManagerA> _logger;
+        public ManagerA(ILogger<ManagerA> logger)
         {
             _logger = logger;
-            _logger.LogInformation($">>> {nameof(GreeterService)}.Constructor");
+            _logger.LogInformation($">>> {nameof(ManagerA)}.Constructor");
         }
 
-        private Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
+        private Task<ManagerAResponse> SayHello(ManagerARequest request, ServerCallContext context)
         {
-            _logger.LogInformation($">>> {nameof(GreeterService)}.{nameof(SayHello)}");
+            _logger.LogInformation($">>> {nameof(ManagerA)}.{nameof(SayHello)}");
 
-            return Task.FromResult(new HelloReply
+            return Task.FromResult(new ManagerAResponse
             {
                 Message = "Hello " + request.Name
             });
@@ -31,7 +31,7 @@ namespace MyGrpcService.Services
 
         public Task<Empty> Test(Empty request, ServerCallContext context)
         {
-            _logger.LogInformation($">>> {nameof(GreeterService)}.{nameof(Test)}");
+            _logger.LogInformation($">>> {nameof(ManagerA)}.{nameof(Test)}");
             return Task.FromResult(new Empty());
         }
 
@@ -45,7 +45,7 @@ namespace MyGrpcService.Services
             switch (request.Method)
             {
                 case nameof(SayHello):
-                    var input = request.Data.Unpack<HelloRequest>();
+                    var input = request.Data.Unpack<ManagerARequest>();
                     var output = await SayHello(input, context);
                     response.Data = Any.Pack(output);
                     break;

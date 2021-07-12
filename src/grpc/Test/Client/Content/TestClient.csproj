@@ -17,13 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Protos\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Protobuf Include="..\MyGrpcService\Protos\greet.proto" GrpcServices="Client">
-	    <Link>Protos\greet.proto</Link>
-	  </Protobuf>
+	  <ProjectReference Include="..\..\..\Company\Component\Manager\ManagerA\Interface\ManagerA.Interface.csproj" />
 	</ItemGroup>
 
 </Project>

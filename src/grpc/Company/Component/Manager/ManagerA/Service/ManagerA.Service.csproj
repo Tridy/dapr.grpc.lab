@@ -20,4 +20,8 @@
 	  <ProjectReference Include="..\Interface\ManagerA.Interface.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Protos\" />
+	</ItemGroup>
+
 </Project>

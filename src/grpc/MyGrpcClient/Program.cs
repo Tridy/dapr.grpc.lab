@@ -1,4 +1,5 @@
 ﻿using Dapr.Client;
+using Google.Protobuf.Reflection;
 using Grpc.Net.Client;
 using GrpcLabs.Interfaces;
 using System;
@@ -23,7 +24,7 @@ namespace MyGrpcClient
 
             var request = new HelloRequest { Name = "ThinkPad" };
 
-            var result = await daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>("MyGrpcApi001", "SayHello", request).ConfigureAwait(false);
+            var result = await daprClient.InvokeMethodGrpcAsync<HelloRequest, HelloReply>("MyGreeter", "SayHello", request).ConfigureAwait(false);
 
             Console.WriteLine($"Got reply: {result.Message}");
 

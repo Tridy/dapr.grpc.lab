@@ -3,14 +3,10 @@ using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-
-
-
-
 using Dapr.AppCallback.Autogen.Grpc.v1;
-using Dapr.Client;
 using Dapr.Client.Autogen.Grpc.v1;
 using GrpcLabs.Interfaces;
+using System;
 
 namespace MyGrpcService.Services
 {
@@ -23,7 +19,7 @@ namespace MyGrpcService.Services
             _logger.LogInformation($">>> {nameof(GreeterService)}.Constructor");
         }
 
-        public Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
+        private Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
             _logger.LogInformation($">>> {nameof(GreeterService)}.{nameof(SayHello)}");
 
@@ -43,7 +39,9 @@ namespace MyGrpcService.Services
 
         public override async Task<InvokeResponse> OnInvoke(InvokeRequest request, ServerCallContext context)
         {
+
             var response = new InvokeResponse();
+
             switch (request.Method)
             {
                 case nameof(SayHello):
@@ -51,37 +49,31 @@ namespace MyGrpcService.Services
                     var output = await SayHello(input, context);
                     response.Data = Any.Pack(output);
                     break;
-                //case "ByUser":
-                //    var inputByUser = request.Data.Unpack<UserRequest>();
-                //    var outputByUser = await ByUser(inputByUser, context);
-                //    response.Data = Any.Pack(outputByUser);
-                //    break;
-                //case "AggregatorBike":
-                //    var outputBikeAggregator = await BikeAggregator(context);
-                //    response.Data = Any.Pack(outputBikeAggregator);
-                //    break;
+                default:
+                    throw new NotSupportedException($"The method {request.Method} is not supported");
+
             }
             return response;
         }
 
-        public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context) 
-        { 
-            return Task.FromResult(new ListTopicSubscriptionsResponse()); 
+        public override Task<ListTopicSubscriptionsResponse> ListTopicSubscriptions(Empty request, ServerCallContext context)
+        {
+            return Task.FromResult(new ListTopicSubscriptionsResponse());
         }
 
-        public override Task<TopicEventResponse> OnTopicEvent(TopicEventRequest request, ServerCallContext context) 
-        { 
-            return Task.FromResult(new TopicEventResponse()); 
+        public override Task<TopicEventResponse> OnTopicEvent(TopicEventRequest request, ServerCallContext context)
+        {
+            return Task.FromResult(new TopicEventResponse());
         }
 
-        public override Task<ListInputBindingsResponse> ListInputBindings(Empty request, ServerCallContext context) 
-        { 
-            return Task.FromResult(new ListInputBindingsResponse()); 
+        public override Task<ListInputBindingsResponse> ListInputBindings(Empty request, ServerCallContext context)
+        {
+            return Task.FromResult(new ListInputBindingsResponse());
         }
 
-        public override Task<BindingEventResponse> OnBindingEvent(BindingEventRequest request, ServerCallContext context) 
-        { 
-            return Task.FromResult(new BindingEventResponse()); 
+        public override Task<BindingEventResponse> OnBindingEvent(BindingEventRequest request, ServerCallContext context)
+        {
+            return Task.FromResult(new BindingEventResponse());
         }
     }
 }

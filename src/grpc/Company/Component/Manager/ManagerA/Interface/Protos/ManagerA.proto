@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "ManagerA.Interfaces";
+option csharp_namespace = "Company.Manager.ManagerA.Interfaces";
 
 package managerA;
 
